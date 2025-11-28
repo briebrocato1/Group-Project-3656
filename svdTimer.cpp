@@ -12,10 +12,10 @@ double measureSVD(const MatrixXd& matrix, bool use_bdc) {
 
     if (use_bdc) {
         Eigen::BDCSVD<MatrixXd, Eigen::ComputeThinU | Eigen::ComputeThinV> svd(matrix);
-        volatile double dummy = svd.singularValues().coeff(0); //dummy accesser to make sure compiler doesn't optimize calculation away.
+        double dummy = svd.singularValues().coeff(0); //dummy accessor to make sure compiler doesn't optimize calculation away.
     } else {
         Eigen::JacobiSVD<MatrixXd, Eigen::ComputeThinU | Eigen::ComputeThinV> svd(matrix);
-        volatile double dummy = svd.singularValues().coeff(0);
+        double dummy = svd.singularValues().coeff(0);
     }
 
     auto end = std::chrono::high_resolution_clock::now();
