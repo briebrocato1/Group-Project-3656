@@ -7,3 +7,12 @@ This benchmark requires Eigen to be installed to run. Follow instructions on Eig
 ```
 g++ -I /path/to/eigen -O3 svdTimer.cpp -o svdTimer
 ```
+To run, you must execute the svdTimer and pipe the output to a file results.csv for later examination.
+```
+./svdTimer > results.csv
+```
+From here, simploy execute the svdPlotter, and you will see your results.
+```
+python3 svdPlotter.py
+```
+As long as the results.csv file exists, your results will be graphed out for comparison. 
