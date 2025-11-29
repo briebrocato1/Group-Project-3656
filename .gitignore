@@ -1,2 +1,4 @@
 svdTimer
 .vscode/
+results.csv
+svd_benchmark_graph.png

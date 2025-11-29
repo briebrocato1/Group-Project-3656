@@ -24,7 +24,7 @@ double measureSVD(const MatrixXd& matrix, bool use_bdc) {
 }
 
 int main() {
-    std::vector<int> sizes = {32, 64, 128, 256, 512, 1024, 2048};
+    std::vector<int> sizes = {32, 64, 128, 256, 512, 1024};
     int repeats = 5;
 
     std::vector<MatrixXd> matrices;
