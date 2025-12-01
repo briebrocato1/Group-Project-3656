@@ -59,3 +59,19 @@ python eigenvalues.py
 Two plots will be generated: one for runtime/matrix size and one for GFLOPS/matrix size.
 
 
+### QR Portion
+QRTimer.cpp benchmarks the performance of performing QR Factorization by generating random matrices of increasing size and comparing the length to compute/
+
+This benchmark requires Eigen to be installed to run. Follow instructions on Eigen page.
+```
+g++ -I /path/to/eigen -O3 QRTimer.cpp -o QRTimer
+```
+Run the executable and the output will be put into a CSV file:
+```
+./QRTimer > QR_results.csv
+```
+To generate the graph, run the script with the CSV
+```
+python QRPlotter.py
+```
+The results will be graphed for comparison
