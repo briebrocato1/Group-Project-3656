@@ -1,27 +1,51 @@
+import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
+import sys
+import os
 
-sizes = np.array([32, 64, 128, 256, 512, 1024])
-times = np.array([1.37982, 13.0029, 60.9789, 345.373, 2085.81, 15192])
+def plot_qr(filename='qr_results.csv'):
+    if not os.path.exists(filename):
+        print(f"Error: '{filename}' not found.")
+        return
 
-plt.figure(figsize=(8, 6))
+    try:
+        df = pd.read_csv(filename, encoding="utf-8-sig")
+    except Exception as e:
+        print(f"Error reading CSV: {e}")
+        return
 
-plt.plot(sizes, times, marker='o', linewidth=2, label="Householder QR")
+    if 'Size' not in df.columns or 'QR_Time(ms)' not in df.columns:
+        print("CSV must have columns: 'Size' and 'QR_Time(ms)'")
+        print("First line of the file should look like: Size,QR_Time(ms)")
+        return
 
 
-plt.xscale('log', base=2)   
-plt.yscale('log', base=10)
+    plt.figure(figsize=(10, 6))
+    plt.plot(
+        df['Size'],
+        df['QR_Time(ms)'],
+        marker='o',
+        linestyle='-',
+        linewidth=2,
+        label='QR Time'
+    )
+
+    plt.title('Eigen QR Performance: Time vs Matrix Size')
+    plt.xlabel('Matrix Size (N)')
+    plt.ylabel('Time (ms)')
+    plt.grid(True, which='both', linestyle='--', alpha=0.7)
+
+    plt.xscale('log')
+    plt.yscale('log')
+
+    plt.legend()
+
+    output_file = 'qr_time.png'
+    plt.savefig(output_file, dpi=300)
+    print(f"Saved '{output_file}'")
+    plt.show()
 
 
-yticks = [1, 10, 100, 1000, 10000]
-plt.yticks(yticks, [r"$10^0$", r"$10^1$", r"$10^2$", r"$10^3$", r"$10^4$"])
-
-plt.title("QR Factorization Runtime vs Matrix Size")
-plt.xlabel("Matrix Size (N)")
-plt.ylabel("Time (ms)")
-
-plt.grid(True, which='both', linestyle='--', alpha=0.6)
-plt.legend()
-
-plt.tight_layout()
-plt.show()
+if __name__ == "__main__":
+    file_path = sys.argv[1] if len(sys.argv) > 1 else 'qr_results.csv'
+    plot_qr(file_path)
